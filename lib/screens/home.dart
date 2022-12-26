@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
       ),
       drawer: const SideMenu(),
       body: const _HomePageBody(),
-      bottomNavigationBar: const CustomNavigationBar(),
+      bottomNavigationBar: const CustomNavigationBar(), 
     );
   }
 }

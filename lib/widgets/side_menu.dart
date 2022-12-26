@@ -14,17 +14,17 @@ class SideMenu extends StatelessWidget {
 
           ListTile(
             leading: const Icon( Icons.pages_outlined ),
-            title: const Text('Home'),
+            title: const Text('Home'), 
             onTap: () {
-              //Navigator.pushReplacementNamed(context, HomeScreen.routerName );
+              Navigator.pushReplacementNamed(context, 'home' );
             },
           ),
 
           ListTile(
             leading: const Icon( Icons.people_outline ),
-            title: const Text('People'),
+            title: const Text('Miembros'),
             onTap: () {
-
+              Navigator.pushReplacementNamed(context, 'miembros');
             },
           ),
 

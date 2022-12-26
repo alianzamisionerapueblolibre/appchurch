@@ -1,4 +1,5 @@
 
+import 'package:app_red_jovenes/models/anuncio.dart';
 import 'package:flutter/material.dart';
 
 class AnuncioDetail extends StatelessWidget {
@@ -6,33 +7,127 @@ class AnuncioDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final Anuncio anuncio = ModalRoute.of(context)!.settings.arguments as Anuncio;
+
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            height: 400,
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/cheho.jpeg'),
-                fit: BoxFit.fill
-              ),
-              borderRadius: BorderRadius.only(bottomLeft: Radius.elliptical(50, 40), bottomRight: Radius.elliptical(50, 40))
-            ),
-          ),
-
-          const Title(),
-
-          const ButtonSection(),
-
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: const Text('It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'))
+      body: CustomScrollView(
+        slivers: [
+          _CustomAppBar(anuncio: anuncio, ),
+          SliverList(
+            delegate: SliverChildListDelegate([
+              //_PosterAndTitle( movie ),
+            ])
+          )
         ],
       )
     );
   }
 }
+
+class _CustomAppBar extends StatelessWidget {
+
+  final Anuncio anuncio;
+
+  const _CustomAppBar({Key? key, required this.anuncio}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverAppBar(
+      backgroundColor: Colors.white,
+      expandedHeight: 350,
+      floating: false,
+      pinned: true,
+
+      flexibleSpace: ClipRRect(
+        borderRadius: const BorderRadius.vertical(
+          bottom: Radius.circular(20.0),
+        ),
+        child: FlexibleSpaceBar(
+          centerTitle: true,
+          titlePadding: const EdgeInsets.all(0),
+          title: Container(
+            width: double.infinity,
+            alignment: Alignment.bottomLeft,
+            padding: const EdgeInsets.only( bottom: 10, left: 10, right: 10),
+            color: Colors.black12,
+            child: Text(
+                anuncio.descripcion,
+                style: const TextStyle( fontSize: 16, color: Color.fromARGB(207, 225, 251, 251) ),
+                textAlign: TextAlign.center,
+              ),
+          ),
+      
+          background: FadeInImage(
+            placeholder: const AssetImage('assets/loading.gif'), 
+            image: AssetImage( anuncio.imagenEvento.toString() ),
+            fit: BoxFit.fitWidth,
+            height: 250,
+            alignment: Alignment.topCenter,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// class _AnuncioBody extends StatelessWidget {
+  
+//   final Anuncio anuncio;
+
+//   const _AnuncioBody({Key? key, required this.anuncio}) : super(key: key);
+
+
+//   @override
+//   Widget build(BuildContext context) {
+
+//     final TextTheme textTheme = Theme.of(context).textTheme;
+//     final size = MediaQuery.of(context).size;
+
+//     return Container(
+//       margin: EdgeInsets.only( top: 20 ),
+//       padding: EdgeInsets.symmetric( horizontal: 20 ),
+//       child: Row(
+//         children: [
+//           Hero(
+//             tag: movie.heroId!,
+//             child: ClipRRect(
+//               borderRadius: BorderRadius.circular(20),
+//               child: FadeInImage(
+//                 placeholder: AssetImage('assets/no-image.jpg'), 
+//                 image: NetworkImage( movie.fullPosterImg ),
+//                 height: 150,
+//               ),
+//             ),
+//           ),
+
+//           SizedBox( width: 20 ),
+
+//           ConstrainedBox(
+//             constraints: BoxConstraints( maxWidth: size.width - 190 ),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+                
+//                 Text( movie.title, style: textTheme.headline5, overflow: TextOverflow.ellipsis, maxLines: 2 ),
+                
+//                 Text( movie.originalTitle, style: textTheme.subtitle1, overflow: TextOverflow.ellipsis, maxLines: 2),
+
+//                 Row(
+//                   children: [
+//                     Icon( Icons.star_outline, size: 15, color: Colors.grey ),
+//                     SizedBox( width: 5 ),
+//                     Text( '${movie.voteAverage}', style: textTheme.caption )
+//                   ],
+//                 )
+//               ],
+//             ),
+//           )
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class Title extends StatelessWidget {
   const Title({
